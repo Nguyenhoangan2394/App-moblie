@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f2ff; /* Màu xanh nhạt */
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header h1 {
+            font-size: 1.2em;
+            text-align: center;
+            color: #1a3b5d;
+        }
+        
+        .card {
+            background: linear-gradient(45deg, #000000, #333333); /* Gradient từ đen sang xám đậm */
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-number {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .card-balance {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .card-expiry, .card-type {
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        
+        .card-visa {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: auto;
+        }
+        
+        .card-nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-nav span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #555;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+        
+        .card-nav span.active {
+            background-color: #1a3b5d;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .action-buttons button {
+            background-color: #1a3b5d;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            margin: 0 10px;
+        }
+        
+        .menu-items {
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #333;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item .icon {
+            margin-right: 15px;
+        }
+        
+        .menu-item .icon img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .menu-item .text {
+            flex-grow: 1;
+        }
+        
+        .menu-item .arrow {
+            color: #ccc;
+        }
+        
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1a3b5d;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.8em;
+        }
+        
+        nav a img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 5px;
+        }
+        
+        nav a.active {
+            color: #4ca8ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Cards</h1>
+        </header>
+        <main>
+            <!--Hiển thị thông tin thẻ ngân hàng.!-->
+            <div class="card">
+                <div class="card-number">**** **** **** 5137</div>
+                <div class="card-balance">$10,000,000,000</div>
+                <div class="card-expiry">03/27</div>
+                <div class="card-type">VISA</div>
+                <img src="Travel Visa.png" alt="VISA" class="card-visa">
+            </div>
+            <div class="card-nav">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+            </div>
+            <!--Các nút hành động cho thẻ.-->
+            <div class="action-buttons">
+                <button>Setting</button>
+                <button>Transactions</button>
+            </div>
+            <!--Danh sách các tùy chọn menu.-->
+            <div class="menu-items">
+                <div class="menu-item">
+                    <span class="icon"><img src="Purchase Order.png" alt="View Statement"></span>
+                    <span class="text">View Statement</span>
+                    <span class="arrow">></span>
+                </div>
+                <div class="menu-item">
+                    <span class="icon"><img src="Pin Code.png" alt="Change Pin"></span>
+                    <span class="text">Change Pin</span>
+                    <span class="arrow">></span>
+                </div>
+                <div class="menu-item">
+                    <span class="icon"><img src="Remove.png" alt="Remove"></span>
+                    <span class="text">Remove</span>
+                    <span class="arrow">></span>
+                </div>
+            </div>
+        </main>
+        <!--Thanh điều hướng cố định ở dưới cùng.-->
+        <nav>
+            <a href="index.html" class="active"><img src="Home.png" alt="Home"><br>Home</a>
+            <a href="Profile.html"><img src="Name.png" alt="Profile"><br>Profile</a>
+        </nav>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //Xử lý sự kiện click cho các nút hành động.
+            const actionButtons = document.querySelectorAll('.action-buttons button');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert(`${this.textContent} button clicked!`);
+                });
+            });
+            //Xử lý sự kiện click cho các mục menu.
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    alert(`${this.querySelector('.text').textContent} clicked!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
