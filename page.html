@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e6f2ff; /* Màu xanh nhạt */
+            background-color: #e6f2ff;
             color: white;
             margin: 0;
             padding: 0;
@@ -26,12 +26,13 @@
         }
         
         .card {
-            background: linear-gradient(45deg, #000000, #333333); /* Gradient từ đen sang xám đậm */
+            background: linear-gradient(45deg, #000000, #333333);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .card-number {
@@ -50,7 +51,7 @@
             color: #ccc;
         }
         
-        .card-visa {
+        .card-logo {
             position: absolute;
             top: 20px;
             right: 20px;
@@ -90,6 +91,7 @@
             border-radius: 5px;
             font-size: 1em;
             margin: 0 10px;
+            cursor: pointer;
         }
         
         .menu-items {
@@ -104,6 +106,7 @@
             padding: 15px;
             border-bottom: 1px solid #e0e0e0;
             color: #333;
+            cursor: pointer;
         }
         
         .menu-item:last-child {
@@ -154,6 +157,31 @@
         nav a.active {
             color: #4ca8ff;
         }
+
+        #addCardForm {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        #addCardForm input, #addCardForm select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #addCardForm button {
+            background-color: #1a3b5d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -162,25 +190,22 @@
             <h1>My Cards</h1>
         </header>
         <main>
-            <!--Hiển thị thông tin thẻ ngân hàng.!-->
             <div class="card">
-                <div class="card-number">**** **** **** 5137</div>
-                <div class="card-balance">$10,000,000,000</div>
-                <div class="card-expiry">03/27</div>
-                <div class="card-type">VISA</div>
-                <img src="img/Travel Visa.png" alt="VISA" class="card-visa">
+                <div class="card-number"></div>
+                <div class="card-balance"></div>
+                <div class="card-expiry"></div>
+                <div class="card-type"></div>
+                <img src="" alt="Card Logo" class="card-logo">
             </div>
             <div class="card-nav">
                 <span class="active"></span>
                 <span></span>
                 <span></span>
             </div>
-            <!--Các nút hành động cho thẻ.-->
             <div class="action-buttons">
-                <button>Setting</button>
-                <button>Transactions</button>
+                <button onclick="showAddCardForm()">Add New Card</button>
+                <button onclick="removeCard()">Remove Card</button>
             </div>
-            <!--Danh sách các tùy chọn menu.-->
             <div class="menu-items">
                 <div class="menu-item">
                     <span class="icon"><img src="img/Purchase Order.png" alt="View Statement"></span>
@@ -192,29 +217,84 @@
                     <span class="text">Change Pin</span>
                     <span class="arrow">></span>
                 </div>
-                <div class="menu-item">
-                    <span class="icon"><img src="img/Remove.png" alt="Remove"></span>
-                    <span class="text">Remove</span>
-                    <span class="arrow">></span>
-                </div>
+            </div>
+            <div id="addCardForm" style="display: none;">
+                <input type="text" id="newCardNumber" placeholder="Card Number">
+                <input type="text" id="newCardBalance" placeholder="Balance">
+                <input type="text" id="newCardExpiry" placeholder="Expiry Date">
+                <select id="newCardType">
+                    <option value="VISA">VISA</option>
+                    <option value="MASTERCARD">MASTERCARD</option>
+                </select>
+                <button onclick="addNewCard()">Add Card</button>
             </div>
         </main>
-        <!--Thanh điều hướng cố định ở dưới cùng.-->
         <nav>
             <a href="index.html" class="active"><img src="img/Home.png" alt="Home"><br>Home</a>
             <a href="Profile.html"><img src="img/Name.png" alt="Profile"><br>Profile</a>
         </nav>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            //Xử lý sự kiện click cho các nút hành động.
-            const actionButtons = document.querySelectorAll('.action-buttons button');
-            actionButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    alert(`${this.textContent} button clicked!`);
-                });
+        let cards = [
+            { number: "**** **** **** 5137", balance: "$10,000,000,000", expiry: "03/27", type: "VISA", image: "img/Travel Visa.png" },
+            { number: "**** **** **** 1234", balance: "$5,000,000,000", expiry: "12/25", type: "MASTERCARD", image: "img/mastercard-logo.png" }
+        ];
+
+        let currentCardIndex = 0;
+
+        function updateCardDisplay() {
+            const card = cards[currentCardIndex];
+            document.querySelector('.card-number').textContent = card.number;
+            document.querySelector('.card-balance').textContent = card.balance;
+            document.querySelector('.card-expiry').textContent = card.expiry;
+            document.querySelector('.card-type').textContent = card.type;
+            document.querySelector('.card-logo').src = card.image;
+
+            // Update card navigation dots
+            const dots = document.querySelectorAll('.card-nav span');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentCardIndex);
             });
-            //Xử lý sự kiện click cho các mục menu.
+        }
+
+        function switchCard() {
+            currentCardIndex = (currentCardIndex + 1) % cards.length;
+            updateCardDisplay();
+        }
+
+        function removeCard() {
+            if (cards.length > 1) {
+                cards.splice(currentCardIndex, 1);
+                currentCardIndex = currentCardIndex % cards.length;
+                updateCardDisplay();
+            } else {
+                alert("Cannot remove the last card!");
+            }
+        }
+
+        function showAddCardForm() {
+            document.getElementById('addCardForm').style.display = 'block';
+        }
+
+        function addNewCard() {
+            const newCard = {
+                number: document.getElementById('newCardNumber').value,
+                balance: document.getElementById('newCardBalance').value,
+                expiry: document.getElementById('newCardExpiry').value,
+                type: document.getElementById('newCardType').value,
+                image: document.getElementById('newCardType').value === 'VISA' ? "img/Travel Visa.png" : "img/mastercard-logo.png"
+            };
+            cards.push(newCard);
+            currentCardIndex = cards.length - 1;
+            updateCardDisplay();
+            document.getElementById('addCardForm').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCardDisplay();
+
+            document.querySelector('.card').addEventListener('click', switchCard);
+
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach(item => {
                 item.addEventListener('click', function() {
