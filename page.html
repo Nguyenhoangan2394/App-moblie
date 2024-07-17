@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Cards</title>
     <style>
+        /* Thiết lập chung cho trang */
         body {
             font-family: Arial, sans-serif;
             background-color: #e6f2ff;
@@ -19,12 +20,14 @@
             padding: 20px;
         }
         
+        /* Thiết kế cho tiêu đề */
         header h1 {
             font-size: 1.2em;
             text-align: center;
             color: #1a3b5d;
         }
         
+        /* Thiết kế cho thẻ ngân hàng */
         .card {
             background: linear-gradient(45deg, #000000, #333333);
             border-radius: 10px;
@@ -32,23 +35,10 @@
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
         }
         
-        .card-number {
-            font-size: 1.2em;
+        .card-number, .card-balance, .card-expiry, .card-type {
             margin-bottom: 10px;
-        }
-        
-        .card-balance {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .card-expiry, .card-type {
-            font-size: 0.9em;
-            color: #ccc;
         }
         
         .card-logo {
@@ -59,6 +49,31 @@
             height: auto;
         }
         
+        /* Thiết kế cho nút mũi tên chuyển đổi thẻ */
+        .card-container {
+            position: relative;
+        }
+        
+        .arrow-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .arrow-left { left: -20px; }
+        .arrow-right { right: -20px; }
+        
+        /* Thiết kế cho điểm chỉ báo thẻ */
         .card-nav {
             text-align: center;
             margin-bottom: 20px;
@@ -77,6 +92,7 @@
             background-color: #1a3b5d;
         }
         
+        /* Thiết kế cho các nút hành động */
         .action-buttons {
             display: flex;
             justify-content: center;
@@ -94,6 +110,7 @@
             cursor: pointer;
         }
         
+        /* Thiết kế cho menu các tùy chọn */
         .menu-items {
             background-color: #ffffff;
             border-radius: 10px;
@@ -130,6 +147,34 @@
             color: #ccc;
         }
         
+        /* Thiết kế cho form thêm thẻ mới */
+        #addCardForm {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #addCardForm input, #addCardForm select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #addCardForm button {
+            background-color: #1a3b5d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Thiết kế cho thanh điều hướng dưới cùng */
         nav {
             position: fixed;
             bottom: 0;
@@ -157,31 +202,6 @@
         nav a.active {
             color: #4ca8ff;
         }
-
-        #addCardForm {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        #addCardForm input, #addCardForm select {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        #addCardForm button {
-            background-color: #1a3b5d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -190,22 +210,30 @@
             <h1>My Cards</h1>
         </header>
         <main>
-            <div class="card">
-                <div class="card-number"></div>
-                <div class="card-balance"></div>
-                <div class="card-expiry"></div>
-                <div class="card-type"></div>
-                <img src="" alt="Card Logo" class="card-logo">
+            <!-- Container chứa thẻ và nút mũi tên -->
+            <div class="card-container">
+                <button class="arrow-button arrow-left" onclick="switchCard(-1)">&lt;</button>
+                <div class="card">
+                    <div class="card-number"></div>
+                    <div class="card-balance"></div>
+                    <div class="card-expiry"></div>
+                    <div class="card-type"></div>
+                    <img src="img/MasterCard.png" alt="Card Logo" class="card-logo">
+                </div>
+                <button class="arrow-button arrow-right" onclick="switchCard(1)">&gt;</button>
             </div>
+            <!-- Điểm chỉ báo thẻ -->
             <div class="card-nav">
                 <span class="active"></span>
                 <span></span>
                 <span></span>
             </div>
+            <!-- Các nút hành động -->
             <div class="action-buttons">
                 <button onclick="showAddCardForm()">Add New Card</button>
                 <button onclick="removeCard()">Remove Card</button>
             </div>
+            <!-- Menu các tùy chọn -->
             <div class="menu-items">
                 <div class="menu-item">
                     <span class="icon"><img src="img/Purchase Order.png" alt="View Statement"></span>
@@ -218,6 +246,7 @@
                     <span class="arrow">></span>
                 </div>
             </div>
+            <!-- Form thêm thẻ mới -->
             <div id="addCardForm" style="display: none;">
                 <input type="text" id="newCardNumber" placeholder="Card Number">
                 <input type="text" id="newCardBalance" placeholder="Balance">
@@ -229,19 +258,23 @@
                 <button onclick="addNewCard()">Add Card</button>
             </div>
         </main>
+        <!-- Thanh điều hướng dưới cùng -->
         <nav>
             <a href="index.html" class="active"><img src="img/Home.png" alt="Home"><br>Home</a>
             <a href="Profile.html"><img src="img/Name.png" alt="Profile"><br>Profile</a>
         </nav>
     </div>
     <script>
+        // Mảng chứa thông tin các thẻ
         let cards = [
             { number: "**** **** **** 5137", balance: "$10,000,000,000", expiry: "03/27", type: "VISA", image: "img/Travel Visa.png" },
             { number: "**** **** **** 1234", balance: "$5,000,000,000", expiry: "12/25", type: "MASTERCARD", image: "img/mastercard-logo.png" }
         ];
 
+        // Chỉ số của thẻ hiện tại đang hiển thị
         let currentCardIndex = 0;
 
+        // Hàm cập nhật hiển thị thông tin thẻ
         function updateCardDisplay() {
             const card = cards[currentCardIndex];
             document.querySelector('.card-number').textContent = card.number;
@@ -250,32 +283,42 @@
             document.querySelector('.card-type').textContent = card.type;
             document.querySelector('.card-logo').src = card.image;
 
-            // Update card navigation dots
+            // Cập nhật điểm chỉ báo thẻ
             const dots = document.querySelectorAll('.card-nav span');
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentCardIndex);
             });
+
+            // Ẩn/hiện nút mũi tên dựa vào vị trí thẻ hiện tại
+            document.querySelector('.arrow-left').style.display = currentCardIndex > 0 ? 'flex' : 'none';
+            document.querySelector('.arrow-right').style.display = currentCardIndex < cards.length - 1 ? 'flex' : 'none';
         }
 
-        function switchCard() {
-            currentCardIndex = (currentCardIndex + 1) % cards.length;
+        // Hàm chuyển đổi thẻ
+        function switchCard(direction) {
+            currentCardIndex += direction;
+            if (currentCardIndex < 0) currentCardIndex = 0;
+            if (currentCardIndex >= cards.length) currentCardIndex = cards.length - 1;
             updateCardDisplay();
         }
 
+        // Hàm xóa thẻ hiện tại
         function removeCard() {
             if (cards.length > 1) {
                 cards.splice(currentCardIndex, 1);
-                currentCardIndex = currentCardIndex % cards.length;
+                if (currentCardIndex >= cards.length) currentCardIndex = cards.length - 1;
                 updateCardDisplay();
             } else {
                 alert("Cannot remove the last card!");
             }
         }
 
+        // Hàm hiển thị form thêm thẻ mới
         function showAddCardForm() {
             document.getElementById('addCardForm').style.display = 'block';
         }
 
+        // Hàm thêm thẻ mới
         function addNewCard() {
             const newCard = {
                 number: document.getElementById('newCardNumber').value,
@@ -290,11 +333,11 @@
             document.getElementById('addCardForm').style.display = 'none';
         }
 
+        // Khởi tạo hiển thị khi trang được tải
         document.addEventListener('DOMContentLoaded', function() {
             updateCardDisplay();
 
-            document.querySelector('.card').addEventListener('click', switchCard);
-
+            // Thêm sự kiện click cho các mục menu
             const menuItems = document.querySelectorAll('.menu-item');
             menuItems.forEach(item => {
                 item.addEventListener('click', function() {
