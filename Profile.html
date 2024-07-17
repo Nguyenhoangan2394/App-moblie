@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Dashboard</title>
     <style>
+        /* Thiết lập cơ bản cho body */
         body {
             font-family: Arial, sans-serif;
             background-color: #e6f3ff; 
@@ -13,12 +14,14 @@
             padding: 0;
         }
         
+        /* Container chính giới hạn chiều rộng tối đa cho giao diện mobile */
         .container {
             max-width: 375px;
             margin: 0 auto;
             padding: 20px;
         }
         
+        /* Thiết kế header với flexbox */
         header {
             display: flex;
             justify-content: space-between;
@@ -26,6 +29,7 @@
             margin-bottom: 20px;
         }
         
+        /* Định dạng phần chào mừng */
         .greeting h1 {
             margin: 0;
             font-size: 1.2em;
@@ -36,11 +40,13 @@
             font-size: 1em;
         }
         
+        /* Định dạng icon profile */
         .profile-icon {
             font-size: 1.5em;
             cursor: pointer;
         }
         
+        /* Khối trắng chứa nội dung chính */
         .white-box {
             background-color: white;
             border-radius: 15px;
@@ -48,6 +54,7 @@
             margin-bottom: 20px;
         }
         
+        /* Thiết kế phần quick actions */
         .quick-actions {
             display: flex;
             justify-content: space-between;
@@ -65,6 +72,7 @@
             width: 22%;
         }
         
+        /* Định dạng tiêu đề mỗi phần */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -84,6 +92,7 @@
             font-size: 0.9em;
         }
         
+        /* Thiết kế cho card và transaction */
         .card, .transaction {
             background-color: #2c4c6e;
             border-radius: 10px;
@@ -122,6 +131,7 @@
             color: #ff6b6b;
         }
         
+        /* Thanh điều hướng cố định ở dưới cùng */
         nav {
             position: fixed;
             bottom: 0;
@@ -144,6 +154,7 @@
             color: #4ca8ff;
         }
         
+        /* Thiết kế hộp chứa lời chào */
         .greeting-box {
             background-color: #1a3b5d;
             border-radius: 15px;
@@ -171,11 +182,11 @@
             height: 50px;
             border-radius: 50%;
         }
-        
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header chứa lời chào và ảnh đại diện -->
         <header>
             <div class="greeting-box">
                 <div class="greeting">
@@ -189,7 +200,7 @@
         </header>
         
         <div class="white-box">
-            <!-- Các nút -->
+            <!-- Các nút hành động nhanh -->
             <div class="quick-actions">
                 <button class="action-btn"><img src="img/Data Transfer.png"><br>Transfer</button>
                 <button class="action-btn"><img src="img/Bill.png"><br>Bills</button>
@@ -197,12 +208,13 @@
                 <button class="action-btn"><img src="img/More.png"><br>More</button>
             </div>
             
+            <!-- Phần hiển thị thẻ ngân hàng -->
             <section class="my-cards">
                 <div class="section-header">
                     <h2>My Cards</h2>
                     <a href="img/page.html">View All</a>
                 </div>
-                <!-- Nội dung thẻ -->
+                <!-- Thông tin thẻ Visa -->
                 <div class="card">
                     <div class="card-icon"><img src="img/Travel Visa.png"></div>
                     <div class="card-info">
@@ -211,6 +223,7 @@
                     </div>
                     <div class="card-balance">$50,000,000</div>
                 </div>
+                <!-- Thông tin thẻ Master -->
                 <div class="card">
                     <div class="card-icon"><img src="img/MasterCard.png"></div>
                     <div class="card-info">
@@ -221,11 +234,13 @@
                 </div>
             </section>
             
+            <!-- Phần hiển thị giao dịch gần đây -->
             <section class="recent-transactions">
                 <div class="section-header">
                     <h2>Recent Transactions</h2>
                     <a href="#">View All</a>
                 </div>
+                <!-- Giao dịch mua sắm -->
                 <div class="transaction">
                     <div class="transaction-icon">🛒</div>
                     <div class="transaction-info">
@@ -234,6 +249,7 @@
                     </div>
                     <div class="transaction-amount negative">-$300</div>
                 </div>
+                <!-- Giao dịch thanh toán hóa đơn -->
                 <div class="transaction">
                     <div class="transaction-icon"><img src="img/Bill.png" alt="Bill"></div>
                     <div class="transaction-info">
@@ -245,6 +261,7 @@
             </section>
         </div>
         
+        <!-- Thanh điều hướng cố định ở dưới cùng -->
         <nav>
             <a href="index.html" class="active"><img src="img/Home.png"><br>Home</a>
             <a href="page.html"><img src="img/Name.png"><br>Cards</a>
@@ -252,7 +269,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Xử lý sự kiện click cho các liên kết "View All".
+            // Xử lý sự kiện click cho các liên kết "View All"
             const viewAllLinks = document.querySelectorAll('.section-header a');
             viewAllLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -265,7 +282,7 @@
                 });
             });
         
-            // Xử lý sự kiện click cho các nút hành động nhanh.
+            // Xử lý sự kiện click cho các nút hành động nhanh
             const actionButtons = document.querySelectorAll('.action-btn');
             actionButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -273,7 +290,7 @@
                 });
             });
         
-            // Xử lý sự kiện click cho các thẻ, chuyển hướng đến trang chi tiết.
+            // Xử lý sự kiện click cho các thẻ, chuyển hướng đến trang chi tiết
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
                 card.addEventListener('click', function() {
@@ -281,7 +298,7 @@
                 });
             });
         
-            // Xử lý sự kiện click cho các giao dịch, hiển thị thông tin chi tiết.
+            // Xử lý sự kiện click cho các giao dịch, hiển thị thông tin chi tiết
             const transactions = document.querySelectorAll('.transaction');
             transactions.forEach(transaction => {
                 transaction.addEventListener('click', function() {
